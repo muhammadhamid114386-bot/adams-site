@@ -147,7 +147,6 @@ h2{font-size:52px}
 .video-content video{display:block;width:100%;max-height:65dvh;border-radius:12px;background:var(--dark)}
 .video-unavailable,.privacy-dialog>p{font-size:17px;color:var(--text)}
 .privacy-dialog{max-width:550px}
-@media(min-width:1600px){.hero{background-size:1600px 100%;background-position:top center;background-repeat:no-repeat}}
 @media(max-width:1100px) and (min-width:701px){.about{grid-template-columns:.95fr 1.05fr;gap:45px}.about h2{font-size:43px}.about-intro{font-size:19px}.review-card{padding:44px;gap:35px}.review-copy h2{font-size:40px}.review-note{font-size:12px;gap:8px}.guide-section{padding:48px;gap:40px;grid-template-columns:.8fr 1.2fr}.guide-form-card{padding:30px}.guide-form-card h2{font-size:27px}.hero h1{font-size:55px}.hero-description{font-size:18px}.faq-item{gap:30px}}
 @media(max-width:900px) and (min-width:701px){.review-card{grid-template-columns:1fr;max-width:620px;gap:36px}.calendar-card{width:100%;max-width:380px;margin-inline:auto}.review-copy h2{font-size:42px}.review-note{font-size:14px}}
 @media(max-width:700px){
