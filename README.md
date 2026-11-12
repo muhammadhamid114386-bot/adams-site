@@ -1,6 +1,12 @@
 # Bergen County Sell & Move
 
-Responsive HTML, CSS and JavaScript recreation of the supplied landing-page PDF, including its desktop and mobile layouts. Original laptop, phone, book and profile artwork is extracted from the provided reference. Inter is hosted locally. No package dependencies or external font requests are required.
+Responsive HTML, CSS and JavaScript recreation of the supplied landing-page PDF, including its desktop and mobile layouts. Original laptop, phone, book and profile artwork is extracted from the provided reference. The approved brand font is Jost, selected as a free alternative to Futura, and the primary accent is `#0090FF`. No package dependencies or external font requests are required.
+
+## Brand typography
+
+Jost is hosted locally in `assets/fonts/jost-variable.woff2`, preloaded by the page, and used for all live headings, body text, buttons and form controls. Its variable weights cover 100–900. Source: [Google Fonts](https://fonts.google.com/specimen/Jost), designed by [indestructible type](https://indestructibletype.com/Jost.html). Its SIL Open Font License is included in `assets/fonts/JOST-LICENSE.txt`.
+
+The brand color is defined once as `--blue` in `styles.css`. Buttons, icons, numbered points, selected calendar states, focus rings and favicon use `#0090FF`; supporting tints and darker hover states are derived from it. Existing reference artwork is embedded as images.
 
 ## Run locally
 
