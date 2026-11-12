@@ -10,7 +10,7 @@ The brand color is defined once as `--blue` in `styles.css`. Buttons, icons, num
 
 ## Run locally
 
-Requires Node.js 20 or newer.
+Use Node.js 24.x, matching `.nvmrc`, GitHub Actions and the Vercel build.
 
 ```sh
 git clone https://github.com/muhammadhamid114386-bot/adams-site.git
@@ -31,6 +31,8 @@ npm run preview
 ```
 
 The production preview opens at http://localhost:4173. Deploy the contents of `dist/` to any static host.
+
+For Vercel, the repository-root `vercel.json` selects the Other/static preset, installs with `npm ci --ignore-scripts`, builds with `npm run build`, and publishes `dist/`. This overrides a stale `public` output-directory setting. The Vercel project Root Directory should be the repository root, where `package.json` and `vercel.json` live. No Node server or framework adapter is required in production.
 
 GitHub Actions runs the JavaScript checks and production build for pushes to `main` and pull requests. Generated output, local reference files and verification captures are excluded from Git.
 

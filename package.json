@@ -15,5 +15,5 @@
     "preview": "node scripts/server.mjs --preview",
     "check": "node --check app.js && node --check site.config.js && node --check scripts/server.mjs && node --check scripts/build.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": { "node": "24.x" }
 }
