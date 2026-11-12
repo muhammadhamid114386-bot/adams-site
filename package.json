@@ -1,0 +1,19 @@
+{
+  "name": "bergen-county-sell-and-move",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Responsive recreation of the supplied Bergen County Sell & Move landing page.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muhammadhamid114386-bot/adams-site.git"
+  },
+  "scripts": {
+    "dev": "node scripts/server.mjs",
+    "start": "node scripts/server.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/server.mjs --preview",
+    "check": "node --check app.js && node --check site.config.js && node --check scripts/server.mjs && node --check scripts/build.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

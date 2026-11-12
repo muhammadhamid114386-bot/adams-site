@@ -1,0 +1,160 @@
+(() => {
+  'use strict';
+  const config = window.SITE_CONFIG || {};
+  const form = document.querySelector('#guide-form');
+  const status = form.querySelector('.form-status');
+  const submit = form.querySelector('[type="submit"]');
+  const allowedUrl = (value) => {
+    if (!value || typeof value !== 'string') return '';
+    try {
+      const url = new URL(value, window.location.href);
+      return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+    } catch { return ''; }
+  };
+
+  document.querySelectorAll('a[href="#get-guide"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const section = document.querySelector('#get-guide');
+      // Move keyboard focus without interrupting the browser's native anchor scroll.
+      section.setAttribute('tabindex', '-1');
+      section.focus({ preventScroll: true });
+    });
+  });
+
+  const preferred = { day: 'Thursday', time: '1:30 PM' };
+  const instagramUrl = allowedUrl(config.instagramUrl);
+  if (instagramUrl) document.querySelector('.testimonial-art').href = instagramUrl;
+  const calendar = document.querySelector('.calendar-card');
+  calendar.querySelectorAll('[data-day], [data-time]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const kind = button.hasAttribute('data-day') ? 'day' : 'time';
+      preferred[kind] = button.dataset[kind];
+      calendar.querySelectorAll(`[data-${kind}]`).forEach((item) => {
+        item.setAttribute('aria-pressed', String(item === button));
+      });
+      const message = calendar.querySelector('.calendar-status');
+      message.textContent = `Preferred: ${preferred.day}, ${preferred.time}. ${allowedUrl(config.bookingUrl) ? 'Continue to confirm availability.' : 'Request the guide first to arrange a conversation. This is not a confirmed booking.'}`;
+      message.hidden = false;
+    });
+  });
+  if (allowedUrl(config.bookingUrl)) {
+    const booking = calendar.querySelector('.booking-link');
+    booking.href = allowedUrl(config.bookingUrl);
+    booking.target = '_blank';
+    booking.rel = 'noopener noreferrer';
+    booking.hidden = false;
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    status.hidden = true;
+    const fields = new FormData(form);
+    if (fields.get('website')) return;
+    const lead = {
+      firstName: String(fields.get('firstName') || '').trim(),
+      email: String(fields.get('email') || '').trim(),
+      town: String(fields.get('town') || '').trim(),
+      preferredDay: preferred.day,
+      preferredTime: preferred.time
+    };
+    if (!lead.firstName || !lead.town) {
+      status.textContent = 'Please enter your first name and town.';
+      status.hidden = false;
+      return;
+    }
+    const endpoint = allowedUrl(config.formEndpoint);
+    let guideUrl = allowedUrl(config.guideUrl);
+    if (!endpoint && !guideUrl) {
+      status.textContent = 'Guide requests are not available just yet. Please check back soon. Your details have not been sent.';
+      status.hidden = false;
+      return;
+    }
+    submit.disabled = true;
+    submit.textContent = 'Getting your guide…';
+    try {
+      if (endpoint) {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(lead),
+          signal: AbortSignal.timeout(15000)
+        });
+        if (!response.ok) throw new Error('request_failed');
+        const result = response.headers.get('content-type')?.includes('application/json') ? await response.json() : {};
+        guideUrl = allowedUrl(result.guideUrl) || guideUrl;
+      }
+      const success = document.querySelector('.guide-success');
+      const download = success.querySelector('.download-guide');
+      if (guideUrl) {
+        download.href = guideUrl;
+        download.target = '_blank';
+        download.rel = 'noopener noreferrer';
+        download.hidden = false;
+      } else {
+        success.querySelector('h3').textContent = 'Thank you for your request.';
+        success.querySelector('p').textContent = 'Your details have been sent. Look out for your guide by email.';
+        download.hidden = true;
+      }
+      const bookingUrl = allowedUrl(config.bookingUrl);
+      if (bookingUrl) {
+        const booking = success.querySelector('.success-booking');
+        booking.href = bookingUrl;
+        booking.target = '_blank';
+        booking.rel = 'noopener noreferrer';
+        booking.hidden = false;
+      }
+      form.hidden = true;
+      success.hidden = false;
+      success.setAttribute('tabindex', '-1');
+      success.focus({ preventScroll: true });
+    } catch {
+      status.textContent = 'We couldn’t complete your request. Please try again in a moment.';
+      status.hidden = false;
+    } finally {
+      submit.disabled = false;
+      submit.textContent = 'Get My Free Guide';
+    }
+  });
+
+  const videoDialog = document.querySelector('#video-dialog');
+  document.querySelector('[data-video-open]').addEventListener('click', () => {
+    const url = allowedUrl(config.heroVideoUrl);
+    const content = videoDialog.querySelector('.video-content');
+    if (url && !content.querySelector('video')) {
+      const video = document.createElement('video');
+      video.src = url;
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      content.append(video);
+    }
+    videoDialog.querySelector('.video-unavailable').hidden = Boolean(url);
+    videoDialog.showModal();
+    const video = content.querySelector('video');
+    if (video) video.play().catch(() => {});
+  });
+  const privacyDialog = document.querySelector('#privacy-dialog');
+  document.querySelector('[data-privacy-open]').addEventListener('click', (event) => {
+    const url = allowedUrl(config.privacyPolicyUrl);
+    if (url) { event.currentTarget.href = url; return; }
+    event.preventDefault();
+    privacyDialog.showModal();
+  });
+  document.querySelectorAll('dialog').forEach((dialog) => {
+    dialog.querySelector('[data-dialog-close]').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target !== dialog) return;
+      const rect = dialog.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      dialog.querySelector('video')?.pause();
+      document.body.style.overflow = '';
+    });
+  });
+  const observer = new MutationObserver(() => {
+    document.body.style.overflow = document.querySelector('dialog[open]') ? 'hidden' : '';
+  });
+  document.querySelectorAll('dialog').forEach((dialog) => observer.observe(dialog, { attributes: true, attributeFilter: ['open'] }));
+})();
