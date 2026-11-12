@@ -22,7 +22,6 @@
   });
 
   const preferred = { day: 'Thursday', time: '1:30 PM' };
-  const instagramUrl = allowedUrl(config.instagramUrl);
   const calendar = document.querySelector('.calendar-card');
   calendar.querySelectorAll('[data-day], [data-time]').forEach((button) => {
     button.addEventListener('click', () => {
@@ -157,32 +156,54 @@
   });
   document.querySelectorAll('dialog').forEach((dialog) => observer.observe(dialog, { attributes: true, attributeFilter: ['open'] }));
 
-  const storyDialog = document.querySelector('#adam-story-dialog');
-  const storyVideo = storyDialog.querySelector('video');
-  const storyUrl = allowedUrl(config.adamStoryVideoUrl);
+  const storyPhone = document.querySelector('.adam-phone');
+  const storyVideo = document.querySelector('#adam-story-video');
+  const storyTrigger = document.querySelector('.adam-phone-trigger');
+  const storyStop = document.querySelector('[data-adam-stop]');
+  const storyError = document.querySelector('.adam-inline-error');
+  const storyUrl = allowedUrl(config.adamStoryVideoUrl) || storyVideo.getAttribute('src');
   const storyPoster = allowedUrl(config.adamStoryPosterUrl);
   if (storyPoster) {
     document.querySelector('.adam-poster').src = storyPoster;
     storyVideo.poster = storyPoster;
   }
-  if (instagramUrl) storyDialog.querySelector('[data-adam-story-fallback]').href = instagramUrl;
-  document.querySelectorAll('[data-adam-story]').forEach((link) => {
-    if (instagramUrl) link.href = instagramUrl;
-    if (!storyUrl) return; // The supplied Instagram destination remains a working link.
-    link.removeAttribute('target');
-    link.setAttribute('aria-haspopup', 'dialog');
-    link.setAttribute('aria-controls', storyDialog.id);
-    link.setAttribute('aria-label', 'Watch Adam’s story');
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      if (!storyVideo.getAttribute('src')) storyVideo.src = storyUrl;
-      storyDialog.showModal();
-      storyVideo.play().catch(() => {});
+  document.querySelectorAll('[data-adam-story]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (storyVideo.src !== new URL(storyUrl, location.href).href) storyVideo.src = storyUrl;
+      if (storyVideo.error) storyVideo.load();
+      storyError.hidden = true;
+      storyVideo.hidden = false;
+      storyTrigger.hidden = true;
+      storyStop.hidden = false;
+      storyPhone.classList.add('adam-phone-playing');
+      storyVideo.play().catch((error) => {
+        // Native controls remain available if the browser requires another tap.
+        if (error.name !== 'NotAllowedError' && error.name !== 'AbortError') storyError.hidden = false;
+      });
+      if (!storyPhone.contains(button)) {
+        storyPhone.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+      }
+      storyVideo.focus({ preventScroll: true });
     });
   });
-  storyVideo.addEventListener('error', () => {
-    storyDialog.querySelector('.adam-story-error').hidden = false;
+  const stopStory = () => {
+    storyVideo.pause();
+    if (storyVideo.readyState) storyVideo.currentTime = 0;
+    storyVideo.hidden = true;
+    storyTrigger.hidden = false;
+    storyStop.hidden = true;
+    storyError.hidden = true;
+    storyPhone.classList.remove('adam-phone-playing');
+    storyTrigger.focus({ preventScroll: true });
+  };
+  storyStop.addEventListener('click', stopStory);
+  storyPhone.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !storyVideo.hidden && !document.fullscreenElement) {
+      event.preventDefault();
+      stopStory();
+    }
   });
+  storyVideo.addEventListener('error', () => { if (!storyVideo.hidden) storyError.hidden = false; });
 
   const steps = [...document.querySelectorAll('.planning .step')];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

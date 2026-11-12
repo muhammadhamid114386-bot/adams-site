@@ -2,7 +2,7 @@
 window.SITE_CONFIG = Object.freeze({
   heroVideoUrl: "",
   instagramUrl: "https://www.instagram.com/p/DPFWOPkAcvM/",
-  adamStoryVideoUrl: "",
+  adamStoryVideoUrl: "./assets/adam-story.mp4",
   adamStoryPosterUrl: "./assets/adam-walkthrough-poster.webp",
   guideUrl: "",
   formEndpoint: "",

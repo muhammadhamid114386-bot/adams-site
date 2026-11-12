@@ -28,7 +28,26 @@ const server = createServer((request, response) => {
       return response.end('Page not found');
     }
     const info = statSync(file);
-    response.writeHead(200, { 'Content-Type': types[extname(file)] || 'application/octet-stream', 'Content-Length': info.size, 'Cache-Control': preview ? 'public, max-age=300' : 'no-cache', 'X-Content-Type-Options': 'nosniff' });
+    const headers = { 'Content-Type': types[extname(file)] || 'application/octet-stream', 'Content-Length': info.size, 'Cache-Control': preview ? 'public, max-age=300' : 'no-cache', 'X-Content-Type-Options': 'nosniff', 'Accept-Ranges': 'bytes' };
+    const range = request.headers.range;
+    if (range) {
+      const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+      const rejectRange = () => {
+        response.writeHead(416, { 'Content-Range': `bytes */${info.size}`, 'Content-Length': 0 });
+        response.end();
+      };
+      if (!match || (!match[1] && !match[2]) || info.size === 0) return rejectRange();
+      const first = match[1] ? Number(match[1]) : null;
+      const last = match[2] ? Number(match[2]) : null;
+      if ((first !== null && !Number.isSafeInteger(first)) || (last !== null && !Number.isSafeInteger(last))) return rejectRange();
+      const start = first === null ? Math.max(0, info.size - last) : first;
+      const end = first === null || last === null ? info.size - 1 : Math.min(last, info.size - 1);
+      if (start >= info.size || start > end || (first === null && last === 0)) return rejectRange();
+      response.writeHead(206, { ...headers, 'Content-Range': `bytes ${start}-${end}/${info.size}`, 'Content-Length': end - start + 1 });
+      if (request.method === 'HEAD') return response.end();
+      return createReadStream(file, { start, end }).pipe(response);
+    }
+    response.writeHead(200, headers);
     if (request.method === 'HEAD') return response.end();
     createReadStream(file).pipe(response);
   } catch {

@@ -67,24 +67,29 @@
 
       <section class="adam-section" id="meet-adam" aria-labelledby="about-title">
         <div class="adam-layout">
+          <h2 class="adam-title" id="about-title" data-adam-reveal>Meet Adam Sperber<svg class="adam-underline" viewBox="0 0 160 16" aria-hidden="true"><path d="M3 12Q80-5 157 12"/></svg></h2>
           <div class="adam-intro">
-            <p class="adam-badge" data-adam-reveal><svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg><span>Bergen County local expert</span></p>
-            <h2 id="about-title" data-adam-reveal>Meet Adam Sperber<svg class="adam-underline" viewBox="0 0 160 16" aria-hidden="true"><path d="M3 12Q80-5 157 12"/></svg></h2>
             <p data-adam-reveal>I’ve spent my life in Bergen County and sold hundreds of homes over the last 10 years. I also have an engineering background, which gives me a data-driven, detail-oriented approach to pricing, market trends, and strategy.</p>
             <p data-adam-reveal>When we review your home, I’ll walk you through comparable sales and a clear breakdown of selling costs, so you can see where the numbers come from and feel confident about your next step.</p>
           </div>
 
           <div class="adam-showcase" data-adam-reveal>
-            <a class="adam-phone" href="https://www.instagram.com/p/DPFWOPkAcvM/" target="_blank" rel="noopener noreferrer" aria-label="Watch Adam’s story on Instagram (opens in a new tab)" data-adam-story>
+            <div class="adam-phone">
               <span class="adam-phone-side" aria-hidden="true"></span>
-              <span class="adam-phone-screen">
+              <div class="adam-phone-screen">
                 <img class="adam-poster" src="./assets/adam-walkthrough-poster.webp" alt="Adam in the original Bergen County home walkthrough." width="813" height="970" loading="lazy" />
+                <video id="adam-story-video" class="adam-inline-video" src="./assets/adam-story.mp4" controls playsinline preload="none" poster="./assets/adam-walkthrough-poster.webp" tabindex="0" aria-label="Adam’s story" hidden></video>
                 <span class="adam-phone-shade" aria-hidden="true"></span>
                 <span class="adam-phone-camera" aria-hidden="true"></span>
-                <span class="adam-phone-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4.5a1 1 0 0 1 1.5-.85l12 7.5a1 1 0 0 1 0 1.7l-12 7.5A1 1 0 0 1 8 19.5Z"/></svg></span>
-                <span class="adam-phone-caption"><svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg><span>Watch Adam’s story</span></span>
-              </span>
-            </a>
+                <button class="adam-phone-trigger" type="button" aria-label="Play Adam’s story inside the phone" aria-controls="adam-story-video" data-adam-story>
+                  <span class="adam-phone-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4.5a1 1 0 0 1 1.5-.85l12 7.5a1 1 0 0 1 0 1.7l-12 7.5A1 1 0 0 1 8 19.5Z"/></svg></span>
+                  <span class="adam-phone-caption"><svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg><span>Watch Adam’s story</span></span>
+                </button>
+                <button class="adam-phone-stop" type="button" aria-label="Stop video and return to preview" data-adam-stop hidden><svg class="icon" aria-hidden="true"><use href="#icon-close"/></svg></button>
+                <p class="adam-inline-error" role="alert" hidden>The video couldn’t load. Close it and try again.</p>
+              </div>
+            </div>
+            <noscript><p><a href="https://www.instagram.com/p/DPFWOPkAcvM/" target="_blank" rel="noopener noreferrer">Watch Adam’s story on Instagram</a></p></noscript>
           </div>
 
           <div class="adam-decision-card" data-adam-reveal>
@@ -110,21 +115,7 @@
 
           <div class="adam-actions" data-adam-reveal>
             <a class="button adam-guide-cta" href="#get-guide">Get My Free Guide<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-7-7 7 7-7 7"/></svg></a>
-            <a class="adam-story-button" href="https://www.instagram.com/p/DPFWOPkAcvM/" target="_blank" rel="noopener noreferrer" data-adam-story><svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg><span>Watch Adam’s story</span></a>
-          </div>
-        </div>
-        <dialog class="content-dialog adam-story-dialog" id="adam-story-dialog" aria-labelledby="adam-story-title"><button class="dialog-close" type="button" aria-label="Close Adam’s story" data-dialog-close><svg class="icon"><use href="#icon-close"/></svg></button><h2 id="adam-story-title">Watch Adam’s story</h2><video class="adam-story-video" controls playsinline preload="none" poster="./assets/adam-walkthrough-poster.webp"></video><p class="adam-story-error" role="status" hidden>The video couldn’t load. <a href="https://www.instagram.com/p/DPFWOPkAcvM/" target="_blank" rel="noopener noreferrer" data-adam-story-fallback>Watch on Instagram</a>.</p></dialog>
-      </section>
-
-      <section class="review-section" aria-labelledby="review-title">
-        <div class="review-card container">
-          <div class="review-copy"><h2 id="review-title">Want help with<br /> your own numbers?</h2><p>After getting the guide, you can choose a time to talk with me about your home and where you’d like to go. Your written estimates and steps follow a property and cost review, with your lender involved if needed.</p><p class="review-note"><svg class="icon"><use href="#icon-check"/></svg><span>The review is free, with no obligation to list.</span></p></div>
-          <div class="calendar-card" aria-label="Choose your preferred day and time">
-            <div class="calendar-header"><img src="./assets/adam-sperber.webp" alt="" width="48" height="48" loading="lazy" /><div><strong>Adam Sperber</strong><span>The Sperber Group</span></div><span class="icon-tile"><svg class="icon"><use href="#icon-calendar"/></svg></span></div>
-            <div class="calendar-days" role="group" aria-label="Preferred day"><button type="button" data-day="Monday" aria-pressed="false">Mon<i></i></button><button type="button" data-day="Tuesday" aria-pressed="false">Tue<i></i></button><button type="button" data-day="Wednesday" aria-pressed="false">Wed<i></i></button><button type="button" data-day="Thursday" aria-pressed="true">Thu<i></i></button><button type="button" data-day="Friday" aria-pressed="false">Fri<i></i></button></div>
-            <div class="calendar-times" role="group" aria-label="Preferred time"><button type="button" data-time="10:00 AM" aria-pressed="false">10:00 AM</button><button type="button" data-time="1:30 PM" aria-pressed="true">1:30 PM</button><button type="button" data-time="4:00 PM" aria-pressed="false">4:00 PM</button><button type="button" data-time="6:30 PM" aria-pressed="false">6:30 PM</button></div>
-            <p class="calendar-status" role="status" hidden></p>
-            <a class="button booking-link" href="#get-guide" hidden>Continue to booking</a>
+            <button class="adam-story-button" type="button" aria-controls="adam-story-video" data-adam-story><svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg><span>Watch Adam’s story</span></button>
           </div>
         </div>
       </section>
@@ -154,6 +145,19 @@
         </dl>
         <a class="button faq-cta" href="#get-guide">Get My Free Guide</a>
       </div></section>
+      <section class="review-section" aria-labelledby="review-title">
+        <div class="review-card container">
+          <div class="review-copy"><h2 id="review-title">Want help with<br /> your own numbers?</h2><p>After getting the guide, you can choose a time to talk with me about your home and where you’d like to go. Your written estimates and steps follow a property and cost review, with your lender involved if needed.</p><p class="review-note"><svg class="icon"><use href="#icon-check"/></svg><span>The review is free, with no obligation to list.</span></p></div>
+          <div class="calendar-card" aria-label="Choose your preferred day and time">
+            <div class="calendar-header"><img src="./assets/adam-sperber.webp" alt="" width="48" height="48" loading="lazy" /><div><strong>Adam Sperber</strong><span>The Sperber Group</span></div><span class="icon-tile"><svg class="icon"><use href="#icon-calendar"/></svg></span></div>
+            <div class="calendar-days" role="group" aria-label="Preferred day"><button type="button" data-day="Monday" aria-pressed="false">Mon<i></i></button><button type="button" data-day="Tuesday" aria-pressed="false">Tue<i></i></button><button type="button" data-day="Wednesday" aria-pressed="false">Wed<i></i></button><button type="button" data-day="Thursday" aria-pressed="true">Thu<i></i></button><button type="button" data-day="Friday" aria-pressed="false">Fri<i></i></button></div>
+            <div class="calendar-times" role="group" aria-label="Preferred time"><button type="button" data-time="10:00 AM" aria-pressed="false">10:00 AM</button><button type="button" data-time="1:30 PM" aria-pressed="true">1:30 PM</button><button type="button" data-time="4:00 PM" aria-pressed="false">4:00 PM</button><button type="button" data-time="6:30 PM" aria-pressed="false">6:30 PM</button></div>
+            <p class="calendar-status" role="status" hidden></p>
+            <a class="button booking-link" href="#get-guide" hidden>Continue to booking</a>
+          </div>
+        </div>
+      </section>
+
     </main>
 
     <footer class="site-footer"><div class="footer-inner container"><div class="footer-brand"><p><strong>Adam Sperber</strong><span class="footer-divider">|</span><span>The Sperber Group</span></p><span class="brokerage">Keller Williams Village Square Realty</span></div><div class="footer-links"><span class="housing"><svg class="icon"><use href="#icon-housing"/></svg>Equal Housing Opportunity</span><span class="footer-divider">|</span><a href="#privacy-policy" data-privacy-open>Privacy Policy</a></div></div></footer>

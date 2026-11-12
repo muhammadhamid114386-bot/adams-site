@@ -50,7 +50,7 @@ Update `site.config.js` when these assets and destinations are available:
 | --- | --- |
 | `heroVideoUrl` | A direct MP4 or WebM URL for Adam's actual walkthrough. |
 | `instagramUrl` | The testimonial URL included in the source PDF. |
-| `adamStoryVideoUrl` | Optional direct MP4 or WebM for the Meet Adam section. When set, both story actions open the accessible video modal; otherwise they open the existing Instagram destination. |
+| `adamStoryVideoUrl` | Direct MP4 or WebM played inside the Meet Adam phone. Defaults to the local `assets/adam-story.mp4`, sourced from the Instagram post already linked in the supplied reference. Both story buttons use this player. |
 | `adamStoryPosterUrl` | Real video poster for the Meet Adam phone. Defaults to a frame extracted from the original supplied walkthrough. |
 | `guideUrl` | URL to the actual Sell & Move Guide PDF. The supplied landing-page reference is not the guide. |
 | `formEndpoint` | A POST endpoint accepting JSON lead data. |
@@ -63,4 +63,6 @@ Until a guide URL or endpoint is configured, valid form submissions show an hone
 
 The layout follows the reference; PDF print-page gaps are intentionally removed. The mobile layout follows page 6, including the form above the guide cover. The source reference, extractions and local verification captures are kept in ignored development folders and are excluded from `dist/`.
 
-The Meet Adam section follows the separately approved editorial reference. Its phone, information card, icons, calendar and actions are live markup, with reduced-motion and no-JavaScript fallbacks. The phone poster uses the existing walkthrough frame, rather than the concept portrait. Its decorative property thumbnails come from the supplied design and are not represented as actual listings. The cost graphic says “Cost review”; no unverified sale-cost percentage is displayed.
+The Meet Adam section uses a centered heading and action group, with the phone and introduction/card between them. Its phone, information card, icons, calendar and actions are live markup. The local video plays inline inside the phone, with native controls and a stop/return-to-preview button; it never opens a modal or new tab during the normal flow. The secondary story button scrolls back to the phone and starts/resumes playback. Escape also stops playback and returns keyboard focus to the play button. The source video is the public Instagram post already linked in the supplied reference: https://www.instagram.com/p/DPFWOPkAcvM/. It loads only when requested. A no-JavaScript link to that original post is provided.
+
+The phone poster uses the existing walkthrough frame, rather than the concept portrait. Its decorative property thumbnails come from the supplied design and are not represented as actual listings. The cost graphic says “Cost review”; no unverified sale-cost percentage is displayed. The consultation/calendar section follows the FAQ. Card hover feedback uses gentle movement/shadow rather than color changes, with reduced-motion support.
