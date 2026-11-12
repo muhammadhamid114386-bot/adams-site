@@ -50,6 +50,8 @@ Update `site.config.js` when these assets and destinations are available:
 | --- | --- |
 | `heroVideoUrl` | A direct MP4 or WebM URL for Adam's actual walkthrough. |
 | `instagramUrl` | The testimonial URL included in the source PDF. |
+| `adamStoryVideoUrl` | Optional direct MP4 or WebM for the Meet Adam section. When set, both story actions open the accessible video modal; otherwise they open the existing Instagram destination. |
+| `adamStoryPosterUrl` | Real video poster for the Meet Adam phone. Defaults to a frame extracted from the original supplied walkthrough. |
 | `guideUrl` | URL to the actual Sell & Move Guide PDF. The supplied landing-page reference is not the guide. |
 | `formEndpoint` | A POST endpoint accepting JSON lead data. |
 | `bookingUrl` | A real calendar or appointment-booking link. |
@@ -60,3 +62,5 @@ The form sends `{ firstName, email, town, preferredDay, preferredTime }`. The en
 Until a guide URL or endpoint is configured, valid form submissions show an honest unavailable message and do not send, save or pretend to submit personal data. With only a guide URL configured, the form opens the guide without transmitting lead details. Calendar buttons select a preference; they do not reserve an appointment. The main video and privacy policy show an unavailable message until their actual destinations are configured.
 
 The layout follows the reference; PDF print-page gaps are intentionally removed. The mobile layout follows page 6, including the form above the guide cover. The source reference, extractions and local verification captures are kept in ignored development folders and are excluded from `dist/`.
+
+The Meet Adam section follows the separately approved editorial reference. Its phone, information card, icons, calendar and actions are live markup, with reduced-motion and no-JavaScript fallbacks. The phone poster uses the existing walkthrough frame, rather than the concept portrait. Its decorative property thumbnails come from the supplied design and are not represented as actual listings. The cost graphic says “Cost review”; no unverified sale-cost percentage is displayed.

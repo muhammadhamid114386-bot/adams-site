@@ -23,7 +23,6 @@
 
   const preferred = { day: 'Thursday', time: '1:30 PM' };
   const instagramUrl = allowedUrl(config.instagramUrl);
-  if (instagramUrl) document.querySelector('.testimonial-art').href = instagramUrl;
   const calendar = document.querySelector('.calendar-card');
   calendar.querySelectorAll('[data-day], [data-time]').forEach((button) => {
     button.addEventListener('click', () => {
@@ -158,6 +157,33 @@
   });
   document.querySelectorAll('dialog').forEach((dialog) => observer.observe(dialog, { attributes: true, attributeFilter: ['open'] }));
 
+  const storyDialog = document.querySelector('#adam-story-dialog');
+  const storyVideo = storyDialog.querySelector('video');
+  const storyUrl = allowedUrl(config.adamStoryVideoUrl);
+  const storyPoster = allowedUrl(config.adamStoryPosterUrl);
+  if (storyPoster) {
+    document.querySelector('.adam-poster').src = storyPoster;
+    storyVideo.poster = storyPoster;
+  }
+  if (instagramUrl) storyDialog.querySelector('[data-adam-story-fallback]').href = instagramUrl;
+  document.querySelectorAll('[data-adam-story]').forEach((link) => {
+    if (instagramUrl) link.href = instagramUrl;
+    if (!storyUrl) return; // The supplied Instagram destination remains a working link.
+    link.removeAttribute('target');
+    link.setAttribute('aria-haspopup', 'dialog');
+    link.setAttribute('aria-controls', storyDialog.id);
+    link.setAttribute('aria-label', 'Watch Adam’s story');
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (!storyVideo.getAttribute('src')) storyVideo.src = storyUrl;
+      storyDialog.showModal();
+      storyVideo.play().catch(() => {});
+    });
+  });
+  storyVideo.addEventListener('error', () => {
+    storyDialog.querySelector('.adam-story-error').hidden = false;
+  });
+
   const steps = [...document.querySelectorAll('.planning .step')];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   if ('IntersectionObserver' in window && !reducedMotion.matches) {
@@ -188,6 +214,32 @@
     } catch {
       stepObserver?.disconnect();
       steps.forEach((step) => step.classList.remove('will-reveal'));
+    }
+  }
+
+  const aboutReveals = [...document.querySelectorAll('.adam-section [data-adam-reveal]')];
+  if ('IntersectionObserver' in window && !reducedMotion.matches) {
+    let aboutObserver;
+    try {
+      aboutObserver = new IntersectionObserver((entries) => {
+        entries.forEach(({ isIntersecting, target }) => {
+          if (!isIntersecting) return;
+          target.classList.add('adam-revealed');
+          aboutObserver.unobserve(target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+      aboutReveals.forEach((element) => {
+        element.classList.add('adam-reveal');
+        aboutObserver.observe(element);
+      });
+      reducedMotion.addEventListener('change', ({ matches }) => {
+        if (!matches) return;
+        aboutObserver.disconnect();
+        aboutReveals.forEach((element) => element.classList.remove('adam-reveal'));
+      });
+    } catch {
+      aboutObserver?.disconnect();
+      aboutReveals.forEach((element) => element.classList.remove('adam-reveal'));
     }
   }
 })();
