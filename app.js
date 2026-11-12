@@ -157,4 +157,37 @@
     document.body.style.overflow = document.querySelector('dialog[open]') ? 'hidden' : '';
   });
   document.querySelectorAll('dialog').forEach((dialog) => observer.observe(dialog, { attributes: true, attributeFilter: ['open'] }));
+
+  const steps = [...document.querySelectorAll('.planning .step')];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if ('IntersectionObserver' in window && !reducedMotion.matches) {
+    let stepObserver;
+    try {
+      let nextRevealAt = 0;
+      stepObserver = new IntersectionObserver((entries) => {
+        entries.filter((entry) => entry.isIntersecting)
+          .sort((a, b) => steps.indexOf(a.target) - steps.indexOf(b.target))
+          .forEach(({ target }) => {
+            const now = performance.now();
+            const delay = Math.max(0, nextRevealAt - now);
+            target.style.transitionDelay = `${delay}ms`;
+            target.classList.add('is-visible');
+            nextRevealAt = now + delay + 180;
+            stepObserver.unobserve(target);
+          });
+      }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
+      steps.forEach((step) => {
+        step.classList.add('will-reveal');
+        stepObserver.observe(step);
+      });
+      reducedMotion.addEventListener('change', ({ matches }) => {
+        if (!matches) return;
+        stepObserver.disconnect();
+        steps.forEach((step) => step.classList.remove('will-reveal'));
+      });
+    } catch {
+      stepObserver?.disconnect();
+      steps.forEach((step) => step.classList.remove('will-reveal'));
+    }
+  }
 })();
