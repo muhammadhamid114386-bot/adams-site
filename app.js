@@ -18,42 +18,6 @@
     });
   });
 
-  const heroPlayer = document.querySelector('#hero-vsl');
-  const thumbnail = document.querySelector('.vsl-thumbnail');
-  const videoStatus = document.querySelector('.vsl-status');
-  const thumbnailLabel = thumbnail.querySelector('.vsl-thumbnail-duration');
-  thumbnail.hidden = false;
-  heroPlayer.addEventListener('play', () => {
-    thumbnail.hidden = true;
-    videoStatus.hidden = true;
-  });
-  thumbnail.addEventListener('click', async () => {
-    thumbnail.disabled = true;
-    thumbnail.setAttribute('aria-busy', 'true');
-    thumbnailLabel.textContent = 'Loading video…';
-    videoStatus.hidden = true;
-    try {
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('player_timeout')), 15000);
-        customElements.whenDefined('wistia-player').then(() => {
-          clearTimeout(timeout);
-          resolve();
-        });
-      });
-      await heroPlayer.play();
-      thumbnail.hidden = true;
-      heroPlayer.focus({ preventScroll: true });
-    } catch {
-      thumbnail.hidden = false;
-      videoStatus.textContent = 'The video couldn’t start. Please try again in a moment.';
-      videoStatus.hidden = false;
-    } finally {
-      thumbnail.disabled = false;
-      thumbnail.removeAttribute('aria-busy');
-      thumbnailLabel.textContent = 'Watch the walkthrough · 3 min';
-    }
-  });
-
   const privacyDialog = document.querySelector('#privacy-dialog');
   document.querySelector('[data-privacy-open]').addEventListener('click', (event) => {
     const url = allowedUrl(config.privacyPolicyUrl);
