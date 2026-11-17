@@ -13,6 +13,7 @@
     <script src="./app.js" defer></script>
     <script src="https://fast.wistia.com/player.js" async></script>
     <script src="https://fast.wistia.com/embed/oo9ztma0o2.js" async type="module"></script>
+    <script src="https://link.msgsndr.com/js/form_embed.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -47,8 +48,15 @@
           <div class="hero-video" aria-label="Adam’s video walkthrough">
             <div class="hero-laptop-frame">
               <div class="hero-player-screen">
-                <wistia-player id="hero-vsl" media-id="oo9ztma0o2" aspect="1.7777777777777777" player-color="0090ff"></wistia-player>
+                <wistia-player id="hero-vsl" media-id="oo9ztma0o2" aspect="1.7777777777777777" player-color="0090ff" controls-visible-on-load="false" tabindex="-1"></wistia-player>
+                <button class="vsl-thumbnail" type="button" aria-label="Play Adam’s Bergen County Sell and Move walkthrough" aria-controls="hero-vsl" hidden>
+                  <img class="vsl-thumbnail-photo" src="./assets/hero-vsl-poster.jpg" alt="" width="960" height="540" fetchpriority="high" />
+                  <span class="vsl-thumbnail-copy"><span class="vsl-thumbnail-label">Bergen County · Sell &amp; Move</span><span class="vsl-thumbnail-title">Your next move.<br />Starts here.</span><span class="vsl-thumbnail-note">The money. The costs. The timing.</span><span class="vsl-thumbnail-byline">Adam Sperber<span>The Sperber Group</span></span></span>
+                  <span class="vsl-thumbnail-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></svg></span>
+                  <span class="vsl-thumbnail-duration">Watch the walkthrough · 3 min</span>
+                </button>
               </div>
+              <p class="vsl-status" role="status" hidden></p>
             </div>
             <noscript><p><a href="https://fast.wistia.net/embed/iframe/oo9ztma0o2">Watch Adam’s video walkthrough</a></p></noscript>
           </div>
@@ -130,16 +138,29 @@
       <section class="guide-section container" id="get-guide" aria-labelledby="guide-title">
         <div class="guide-art"><img src="./assets/guide-cover.webp" alt="Bergen County Sell & Move Guide by The Sperber Group." width="1080" height="1440" loading="lazy" /></div>
         <div class="guide-form-card"><h2 id="guide-title">Get your free Bergen<br class="desktop-break" /> County Sell &amp; Move Guide</h2><p class="form-description">Enter your details to open the guide. You can book a call afterward if you want help with your move.</p>
-          <form id="guide-form">
-            <div class="form-field"><label for="first-name">First name</label><div class="input-wrap"><svg class="icon"><use href="#icon-user"/></svg><input id="first-name" name="firstName" autocomplete="given-name" maxlength="80" required /></div></div>
-            <div class="form-field"><label for="email">Email address</label><div class="input-wrap"><svg class="icon"><use href="#icon-mail"/></svg><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required /></div></div>
-            <div class="form-field"><label for="town">Town where you own a home</label><div class="input-wrap"><svg class="icon"><use href="#icon-home"/></svg><input id="town" name="town" autocomplete="address-level2" maxlength="120" required /></div></div>
-            <div class="honeypot" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
-            <button class="button submit-button" type="submit">Get My Free Guide</button>
-            <p class="form-privacy"><svg class="icon"><use href="#icon-lock"/></svg><span>We’ll use your details to send the guide and follow up about your move.</span></p>
-            <p class="form-status" role="status" aria-live="polite" hidden></p>
-          </form>
-          <div class="guide-success" hidden><svg class="icon"><use href="#icon-check"/></svg><h3>Your guide is ready.</h3><p>Take a little time to work through your next move.</p><a class="button download-guide" href="#">Open My Free Guide</a><a class="success-booking" href="#" hidden>Choose a time to talk with Adam</a></div>
+          <div class="ghl-form-shell">
+            <iframe
+              src="https://api.leadconnectorhq.com/widget/form/uhIa4K9dXfwiYIrGfaTY"
+              style="width:100%;height:490px;border:none;border-radius:1px"
+              id="inline-uhIa4K9dXfwiYIrGfaTY"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Adam&#39;s Form"
+              data-height="490"
+              data-layout-iframe-id="inline-uhIa4K9dXfwiYIrGfaTY"
+              data-form-id="uhIa4K9dXfwiYIrGfaTY"
+              data-cookie-consent="true"
+              data-cookie-consent-provider="auto"
+              title="Adam&#39;s Form"
+            ></iframe>
+          </div>
+          <p class="form-privacy"><svg class="icon"><use href="#icon-lock"/></svg><span>We’ll use your details to send the guide and follow up about your move.</span></p>
+          <a class="ghl-form-fallback" href="https://api.leadconnectorhq.com/widget/form/uhIa4K9dXfwiYIrGfaTY" target="_blank" rel="noopener noreferrer">Form not loading? Open it here.</a>
         </div>
       </section>
 

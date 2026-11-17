@@ -1,9 +1,6 @@
 (() => {
   'use strict';
   const config = window.SITE_CONFIG || {};
-  const form = document.querySelector('#guide-form');
-  const status = form.querySelector('.form-status');
-  const submit = form.querySelector('[type="submit"]');
   const allowedUrl = (value) => {
     if (!value || typeof value !== 'string') return '';
     try {
@@ -21,73 +18,39 @@
     });
   });
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    status.hidden = true;
-    const fields = new FormData(form);
-    if (fields.get('website')) return;
-    const lead = {
-      firstName: String(fields.get('firstName') || '').trim(),
-      email: String(fields.get('email') || '').trim(),
-      town: String(fields.get('town') || '').trim()
-    };
-    if (!lead.firstName || !lead.town) {
-      status.textContent = 'Please enter your first name and town.';
-      status.hidden = false;
-      return;
-    }
-    const endpoint = allowedUrl(config.formEndpoint);
-    let guideUrl = allowedUrl(config.guideUrl);
-    if (!endpoint && !guideUrl) {
-      status.textContent = 'Guide requests are not available just yet. Please check back soon. Your details have not been sent.';
-      status.hidden = false;
-      return;
-    }
-    submit.disabled = true;
-    submit.textContent = 'Getting your guide…';
+  const heroPlayer = document.querySelector('#hero-vsl');
+  const thumbnail = document.querySelector('.vsl-thumbnail');
+  const videoStatus = document.querySelector('.vsl-status');
+  const thumbnailLabel = thumbnail.querySelector('.vsl-thumbnail-duration');
+  thumbnail.hidden = false;
+  heroPlayer.addEventListener('play', () => {
+    thumbnail.hidden = true;
+    videoStatus.hidden = true;
+  });
+  thumbnail.addEventListener('click', async () => {
+    thumbnail.disabled = true;
+    thumbnail.setAttribute('aria-busy', 'true');
+    thumbnailLabel.textContent = 'Loading video…';
+    videoStatus.hidden = true;
     try {
-      if (endpoint) {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(lead),
-          signal: AbortSignal.timeout(15000)
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error('player_timeout')), 15000);
+        customElements.whenDefined('wistia-player').then(() => {
+          clearTimeout(timeout);
+          resolve();
         });
-        if (!response.ok) throw new Error('request_failed');
-        const result = response.headers.get('content-type')?.includes('application/json') ? await response.json() : {};
-        guideUrl = allowedUrl(result.guideUrl) || guideUrl;
-      }
-      const success = document.querySelector('.guide-success');
-      const download = success.querySelector('.download-guide');
-      if (guideUrl) {
-        download.href = guideUrl;
-        download.target = '_blank';
-        download.rel = 'noopener noreferrer';
-        download.hidden = false;
-      } else {
-        success.querySelector('h3').textContent = 'Thank you for your request.';
-        success.querySelector('p').textContent = 'Your details have been sent. Look out for your guide by email.';
-        download.hidden = true;
-      }
-      const bookingUrl = allowedUrl(config.bookingUrl);
-      if (bookingUrl) {
-        const booking = success.querySelector('.success-booking');
-        booking.href = bookingUrl;
-        booking.target = '_blank';
-        booking.rel = 'noopener noreferrer';
-        booking.hidden = false;
-      }
-      form.hidden = true;
-      success.hidden = false;
-      success.setAttribute('tabindex', '-1');
-      success.focus({ preventScroll: true });
+      });
+      await heroPlayer.play();
+      thumbnail.hidden = true;
+      heroPlayer.focus({ preventScroll: true });
     } catch {
-      status.textContent = 'We couldn’t complete your request. Please try again in a moment.';
-      status.hidden = false;
+      thumbnail.hidden = false;
+      videoStatus.textContent = 'The video couldn’t start. Please try again in a moment.';
+      videoStatus.hidden = false;
     } finally {
-      submit.disabled = false;
-      submit.textContent = 'Get My Free Guide';
+      thumbnail.disabled = false;
+      thumbnail.removeAttribute('aria-busy');
+      thumbnailLabel.textContent = 'Watch the walkthrough · 3 min';
     }
   });
 

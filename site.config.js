@@ -3,8 +3,5 @@ window.SITE_CONFIG = Object.freeze({
   instagramUrl: "https://www.instagram.com/p/DPFWOPkAcvM/",
   adamStoryVideoUrl: "./assets/adam-story.mp4",
   adamStoryPosterUrl: "./assets/adam-walkthrough-poster.webp",
-  guideUrl: "",
-  formEndpoint: "",
-  bookingUrl: "",
   privacyPolicyUrl: ""
 });

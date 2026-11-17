@@ -4,9 +4,9 @@ Responsive HTML, CSS and JavaScript recreation of the supplied landing-page PDF,
 
 ## Brand typography
 
-Jost is hosted locally in `assets/fonts/jost-variable.woff2`, preloaded by the page, and used for all live headings, body text, buttons and form controls. Its variable weights cover 100–900. Source: [Google Fonts](https://fonts.google.com/specimen/Jost), designed by [indestructible type](https://indestructibletype.com/Jost.html). Its SIL Open Font License is included in `assets/fonts/JOST-LICENSE.txt`.
+Jost is hosted locally in `assets/fonts/jost-variable.woff2`, preloaded by the page, and used for the site's headings, body text and buttons. The embedded GHL form controls its own typography. Jost's variable weights cover 100–900. Source: [Google Fonts](https://fonts.google.com/specimen/Jost), designed by [indestructible type](https://indestructibletype.com/Jost.html). Its SIL Open Font License is included in `assets/fonts/JOST-LICENSE.txt`.
 
-The brand color is defined once as `--blue` in `styles.css`. Buttons, icons, numbered points, selected calendar states, focus rings and favicon use `#0090FF`; supporting tints and darker hover states are derived from it. Existing reference artwork is embedded as images.
+The brand color is defined once as `--blue` in `styles.css`. Buttons, icons, numbered points, focus rings and favicon use `#0090FF`; supporting tints and darker hover states are derived from it. Existing reference artwork is embedded as images.
 
 ## Run locally
 
@@ -40,29 +40,28 @@ GitHub Actions runs the JavaScript checks and production build for pushes to `ma
 
 - `index.html`: page content and accessible markup.
 - `styles.css`: reference styling, desktop and mobile layouts.
-- `app.js`: guide form, modal controls and day/time selections.
+- `app.js`: video playback, privacy dialog and scroll reveals.
 - `site.config.js`: production destinations.
 - `assets/`: original reference artwork and locally hosted font.
 
-## Connect the original services
+## Connected services
 
-Update `site.config.js` when these assets and destinations are available:
+The guide card contains the supplied GoHighLevel/LeadConnector form `uhIa4K9dXfwiYIrGfaTY`, loaded directly from `https://api.leadconnectorhq.com/widget/form/uhIa4K9dXfwiYIrGfaTY`. The official `https://link.msgsndr.com/js/form_embed.js` script handles iframe resizing. The supplied activation, layout and cookie-consent attributes are preserved. The native form currently includes Full Name, Email, Phone and Town. Validation, lead submission and the post-submit destination are controlled by that GHL form; there is no duplicate local submission handler or separate endpoint to configure. Live test leads were not submitted during verification.
+
+The site's clay card, heading and privacy note surround the original hosted form. Its internal fields and button are styled in GHL's form builder, because the cross-origin iframe cannot inherit this site's CSS. A direct form link remains available if the embed cannot load.
+
+Update `site.config.js` when these assets and destinations change:
 
 | Setting | Expected value |
 | --- | --- |
 | `instagramUrl` | The testimonial URL included in the source PDF. |
 | `adamStoryVideoUrl` | Direct MP4 or WebM played inside the Meet Adam phone. Defaults to the local `assets/adam-story.mp4`, sourced from the Instagram post already linked in the supplied reference. Both story buttons use this player. |
 | `adamStoryPosterUrl` | Real video poster for the Meet Adam phone. Defaults to a frame extracted from the original supplied walkthrough. |
-| `guideUrl` | URL to the actual Sell & Move Guide PDF. The supplied landing-page reference is not the guide. |
-| `formEndpoint` | A POST endpoint accepting JSON lead data. |
-| `bookingUrl` | A real calendar or appointment-booking link. |
 | `privacyPolicyUrl` | The business's approved privacy policy. |
 
-The form sends `{ firstName, email, town }`. The endpoint should return a successful HTTP status and may return `{ "guideUrl": "https://..." }`. Apply validation and abuse prevention on the receiving service. Third-party endpoints must permit this site's origin. No keys or passwords belong in the public configuration.
+The privacy policy shows an unavailable message until its destination is configured. No keys or passwords belong in the public configuration.
 
-Until a guide URL or endpoint is configured, valid form submissions show an honest unavailable message and do not send, save or pretend to submit personal data. With only a guide URL configured, the form opens the guide without transmitting lead details. An optional booking link can be shown after guide submission. The privacy policy shows an unavailable message until its destination is configured.
-
-The hero VSL uses the supplied Wistia Aurora embed, media ID `oo9ztma0o2`, directly inside a responsive HTML/CSS laptop frame. Wistia's player and media scripts load asynchronously from `fast.wistia.com`. The 16:9 screen reserves its dimensions before loading; the supplied swatch appears until the web component is defined. The Meet Adam phone video is independent.
+The hero VSL uses the supplied Wistia Aurora embed, media ID `oo9ztma0o2`, directly inside a responsive HTML/CSS laptop frame. Wistia's player and media scripts load asynchronously from `fast.wistia.com`. The 16:9 screen reserves its dimensions before loading. A responsive HTML/CSS thumbnail combines a real frame from that video (`assets/hero-vsl-poster.jpg`, captured at 40 seconds), minimal copy and a clay play button. Activating it starts the same Wistia player inline; the thumbnail disappears on playback and returns with a retry message if startup fails. Without JavaScript the native embed and a direct video link remain available. The Meet Adam phone video is independent.
 
 The layout follows the reference; PDF print-page gaps are intentionally removed. The mobile layout follows page 6, including the form above the guide cover. The source reference, extractions and local verification captures are kept in ignored development folders and are excluded from `dist/`.
 

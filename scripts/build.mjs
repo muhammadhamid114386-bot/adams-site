@@ -10,6 +10,6 @@ for (const file of ['index.html', 'styles.css', 'app.js', 'site.config.js']) {
 }
 await cp(resolve(root, 'assets'), resolve(output, 'assets'), { recursive: true });
 const html = await readFile(resolve(output, 'index.html'), 'utf8');
-if (!html.includes('Bergen County') || !html.includes('guide-form')) throw new Error('The built page is incomplete.');
+if (!html.includes('Bergen County') || !html.includes('data-form-id="uhIa4K9dXfwiYIrGfaTY"')) throw new Error('The built page is incomplete.');
 await writeFile(resolve(output, '.nojekyll'), '');
 console.log('Production site built in dist/.\nPreview with: npm run preview');
