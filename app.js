@@ -9,6 +9,9 @@
     } catch { return ''; }
   };
 
+  const heroPlayer = document.querySelector('#hero-vsl');
+  heroPlayer.setAttribute('poster', new URL(heroPlayer.dataset.poster, document.baseURI).href);
+
   document.querySelectorAll('a[href="#get-guide"]').forEach((link) => {
     link.addEventListener('click', () => {
       const section = document.querySelector('#get-guide');

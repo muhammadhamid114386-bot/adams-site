@@ -61,7 +61,7 @@ Update `site.config.js` when these assets and destinations change:
 
 The privacy policy shows an unavailable message until its destination is configured. No keys or passwords belong in the public configuration.
 
-The hero VSL uses the supplied Wistia Aurora embed, media ID `oo9ztma0o2`, directly inside a responsive HTML/CSS laptop frame. Wistia's player and media scripts load asynchronously from `fast.wistia.com`. The 16:9 screen reserves its dimensions before loading; the supplied swatch appears until the web component is defined. The Meet Adam phone video is independent.
+The hero VSL uses the supplied Wistia Aurora embed, media ID `oo9ztma0o2`, directly inside a responsive HTML/CSS laptop frame. Wistia's player and media scripts load asynchronously from `fast.wistia.com`. Its native poster uses `assets/hero-adam-thumbnail.jpg`, an unaltered frame at 31.4 seconds showing Adam facing the camera. `app.js` resolves the image to an absolute URL for Wistia on both local and deployed hosts. The same image fills the reserved 16:9 screen while the component loads. Playback uses Wistia's original controls and starts from the beginning; there is no custom thumbnail overlay. The Meet Adam phone video is independent.
 
 The layout follows the reference; PDF print-page gaps are intentionally removed. The mobile layout follows page 6, including the form above the guide cover. The source reference, extractions and local verification captures are kept in ignored development folders and are excluded from `dist/`.
 
