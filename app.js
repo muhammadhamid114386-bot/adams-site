@@ -21,28 +21,6 @@
     });
   });
 
-  const preferred = { day: 'Thursday', time: '1:30 PM' };
-  const calendar = document.querySelector('.calendar-card');
-  calendar.querySelectorAll('[data-day], [data-time]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const kind = button.hasAttribute('data-day') ? 'day' : 'time';
-      preferred[kind] = button.dataset[kind];
-      calendar.querySelectorAll(`[data-${kind}]`).forEach((item) => {
-        item.setAttribute('aria-pressed', String(item === button));
-      });
-      const message = calendar.querySelector('.calendar-status');
-      message.textContent = `Preferred: ${preferred.day}, ${preferred.time}. ${allowedUrl(config.bookingUrl) ? 'Continue to confirm availability.' : 'Request the guide first to arrange a conversation. This is not a confirmed booking.'}`;
-      message.hidden = false;
-    });
-  });
-  if (allowedUrl(config.bookingUrl)) {
-    const booking = calendar.querySelector('.booking-link');
-    booking.href = allowedUrl(config.bookingUrl);
-    booking.target = '_blank';
-    booking.rel = 'noopener noreferrer';
-    booking.hidden = false;
-  }
-
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -52,9 +30,7 @@
     const lead = {
       firstName: String(fields.get('firstName') || '').trim(),
       email: String(fields.get('email') || '').trim(),
-      town: String(fields.get('town') || '').trim(),
-      preferredDay: preferred.day,
-      preferredTime: preferred.time
+      town: String(fields.get('town') || '').trim()
     };
     if (!lead.firstName || !lead.town) {
       status.textContent = 'Please enter your first name and town.';
