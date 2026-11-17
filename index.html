@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="./styles.css" />
     <script src="./site.config.js" defer></script>
     <script src="./app.js" defer></script>
+    <script src="https://fast.wistia.com/player.js" async></script>
+    <script src="https://fast.wistia.com/embed/oo9ztma0o2.js" async type="module"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -42,9 +44,14 @@
           <div class="location-badge"><span class="pin-circle"><svg class="icon"><use href="#icon-pin"/></svg></span><span>For Bergen County homeowners considering a move</span></div>
           <h1 id="hero-title">Want to move, but unsure the<br class="desktop-break" /> <span>money and timing</span> will work?</h1>
           <p class="video-caption"><svg class="icon"><use href="#icon-play"/></svg><span>Watch Adam explain how he works through the numbers and timing.</span></p>
-          <button class="hero-video" type="button" aria-label="Play Adam’s walkthrough of the numbers and timing" data-video-open>
-            <img src="./assets/hero-laptop.webp" alt="Adam explains how to work through the numbers and timing, shown on a laptop." width="1995" height="1256" fetchpriority="high" />
-          </button>
+          <div class="hero-video" aria-label="Adam’s video walkthrough">
+            <div class="hero-laptop-frame">
+              <div class="hero-player-screen">
+                <wistia-player id="hero-vsl" media-id="oo9ztma0o2" aspect="1.7777777777777777" player-color="0090ff"></wistia-player>
+              </div>
+            </div>
+            <noscript><p><a href="https://fast.wistia.net/embed/iframe/oo9ztma0o2">Watch Adam’s video walkthrough</a></p></noscript>
+          </div>
           <p class="hero-description">Get the free Bergen County Sell &amp; Move Guide. Learn what to work out<br class="desktop-break" /> about the money you could keep, the costs of your next move and the<br class="desktop-break" /> timing before you decide to list.</p>
           <a class="button hero-cta" href="#get-guide">Get My Free Guide</a>
           <p class="hero-reassurance"><svg class="icon"><use href="#icon-shield"/></svg><span>No listing agreement required. Booking a call is optional.</span></p>
@@ -162,7 +169,6 @@
 
     <footer class="site-footer"><div class="footer-inner container"><div class="footer-brand"><p><strong>Adam Sperber</strong><span class="footer-divider">|</span><span>The Sperber Group</span></p><span class="brokerage">Keller Williams Village Square Realty</span></div><div class="footer-links"><span class="housing"><svg class="icon"><use href="#icon-housing"/></svg>Equal Housing Opportunity</span><span class="footer-divider">|</span><a href="#privacy-policy" data-privacy-open>Privacy Policy</a></div></div></footer>
 
-    <dialog class="content-dialog" id="video-dialog" aria-labelledby="video-dialog-title"><button class="dialog-close" type="button" aria-label="Close video" data-dialog-close><svg class="icon"><use href="#icon-close"/></svg></button><h2 id="video-dialog-title">Work through the numbers and timing</h2><div class="video-content"></div><p class="video-unavailable">Adam’s video walkthrough will be available soon.</p></dialog>
     <dialog class="content-dialog privacy-dialog" id="privacy-dialog" aria-labelledby="privacy-dialog-title"><button class="dialog-close" type="button" aria-label="Close privacy policy" data-dialog-close><svg class="icon"><use href="#icon-close"/></svg></button><h2 id="privacy-dialog-title">Privacy Policy</h2><p>The privacy policy will be available before guide requests open.</p></dialog>
   </body>
 </html>

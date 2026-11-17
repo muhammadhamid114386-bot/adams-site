@@ -50,7 +50,6 @@ Update `site.config.js` when these assets and destinations are available:
 
 | Setting | Expected value |
 | --- | --- |
-| `heroVideoUrl` | A direct MP4 or WebM URL for Adam's actual walkthrough. |
 | `instagramUrl` | The testimonial URL included in the source PDF. |
 | `adamStoryVideoUrl` | Direct MP4 or WebM played inside the Meet Adam phone. Defaults to the local `assets/adam-story.mp4`, sourced from the Instagram post already linked in the supplied reference. Both story buttons use this player. |
 | `adamStoryPosterUrl` | Real video poster for the Meet Adam phone. Defaults to a frame extracted from the original supplied walkthrough. |
@@ -61,7 +60,9 @@ Update `site.config.js` when these assets and destinations are available:
 
 The form sends `{ firstName, email, town, preferredDay, preferredTime }`. The endpoint should return a successful HTTP status and may return `{ "guideUrl": "https://..." }`. Apply validation and abuse prevention on the receiving service. Third-party endpoints must permit this site's origin. No keys or passwords belong in the public configuration.
 
-Until a guide URL or endpoint is configured, valid form submissions show an honest unavailable message and do not send, save or pretend to submit personal data. With only a guide URL configured, the form opens the guide without transmitting lead details. Calendar buttons select a preference; they do not reserve an appointment. The main video and privacy policy show an unavailable message until their actual destinations are configured.
+Until a guide URL or endpoint is configured, valid form submissions show an honest unavailable message and do not send, save or pretend to submit personal data. With only a guide URL configured, the form opens the guide without transmitting lead details. Calendar buttons select a preference; they do not reserve an appointment. The privacy policy shows an unavailable message until its destination is configured.
+
+The hero VSL uses the supplied Wistia Aurora embed, media ID `oo9ztma0o2`, directly inside a responsive HTML/CSS laptop frame. Wistia's player and media scripts load asynchronously from `fast.wistia.com`. The 16:9 screen reserves its dimensions before loading; the supplied swatch appears until the web component is defined. The Meet Adam phone video is independent.
 
 The layout follows the reference; PDF print-page gaps are intentionally removed. The mobile layout follows page 6, including the form above the guide cover. The source reference, extractions and local verification captures are kept in ignored development folders and are excluded from `dist/`.
 

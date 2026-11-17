@@ -1,6 +1,5 @@
 /** Add the production destinations here when the original files are available. */
 window.SITE_CONFIG = Object.freeze({
-  heroVideoUrl: "",
   instagramUrl: "https://www.instagram.com/p/DPFWOPkAcvM/",
   adamStoryVideoUrl: "./assets/adam-story.mp4",
   adamStoryPosterUrl: "./assets/adam-walkthrough-poster.webp",

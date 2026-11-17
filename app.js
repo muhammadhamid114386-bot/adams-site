@@ -115,23 +115,6 @@
     }
   });
 
-  const videoDialog = document.querySelector('#video-dialog');
-  document.querySelector('[data-video-open]').addEventListener('click', () => {
-    const url = allowedUrl(config.heroVideoUrl);
-    const content = videoDialog.querySelector('.video-content');
-    if (url && !content.querySelector('video')) {
-      const video = document.createElement('video');
-      video.src = url;
-      video.controls = true;
-      video.playsInline = true;
-      video.preload = 'metadata';
-      content.append(video);
-    }
-    videoDialog.querySelector('.video-unavailable').hidden = Boolean(url);
-    videoDialog.showModal();
-    const video = content.querySelector('video');
-    if (video) video.play().catch(() => {});
-  });
   const privacyDialog = document.querySelector('#privacy-dialog');
   document.querySelector('[data-privacy-open]').addEventListener('click', (event) => {
     const url = allowedUrl(config.privacyPolicyUrl);
